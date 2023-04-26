@@ -1,10 +1,16 @@
-package server
+package register
 
 import "time"
 
 const SEND_TIMEOUT = 1000
 
-type Register struct {
+type Register interface {
+	RegisterServer(s *Server)
+	OfflineServer(name string)
+	DiscoverServer(name string)
+}
+
+type LightRegister struct {
 	servers     map[string]*Server
 	serversList []*Server
 	checkTime   int64
@@ -14,11 +20,21 @@ type Register struct {
 	errorSize   int
 }
 
-func (r *Register) NewRegister() {
-
+type netInfo struct {
+	ip         string
+	port       int
+	requestUrl string
+	protocol   string
 }
 
-func (r *Register) CheckHeartTimeout() []*Server {
+func (r *LightRegister) NewRegister() *LightRegister {
+	return &LightRegister{
+		servers:     make(map[string]*Server),
+		serversList: make([]*Server, 0),
+	}
+}
+
+func (r *LightRegister) CheckHeartTimeout() []*Server {
 	if r.size == 0 {
 		return nil
 	}
@@ -42,6 +58,14 @@ func (r *Register) CheckHeartTimeout() []*Server {
 	return malfunctions
 }
 
-func (r *Register) syncServerStatus() {
+func (r *LightRegister) RegisterServer(s *Server) {
+
+}
+
+func (r *LightRegister) OfflineServer(name string) {
+
+}
+
+func (r *LightRegister) DiscoverServer(name string) {
 
 }

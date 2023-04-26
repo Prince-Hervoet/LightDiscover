@@ -1,4 +1,4 @@
-package server
+package register
 
 import (
 	"net"
@@ -25,12 +25,6 @@ type Server struct {
 	metaInfo     map[string]string
 }
 
-type netInfo struct {
-	ip       string
-	port     int
-	protocol string
-}
-
 func NewServer(id, name string) *Server {
 	now := time.Now().UnixMilli()
 	return &Server{
@@ -43,11 +37,12 @@ func NewServer(id, name string) *Server {
 	}
 }
 
-func (s *Server) SetNetInfo(ip string, port int, protocol string) {
+func (s *Server) SetNetInfo(ip string, port int, url string, protocol string) {
 	n := &netInfo{
-		ip:       ip,
-		port:     port,
-		protocol: protocol,
+		ip:         ip,
+		port:       port,
+		protocol:   protocol,
+		requestUrl: url,
 	}
 	s.netInfo = n
 }

@@ -1,7 +1,6 @@
-package client
+package register
 
 import (
-	"LightDiscovers-Server/server"
 	"net"
 )
 
@@ -10,18 +9,13 @@ type Client struct {
 	clientName string
 	netInfo    *netInfo
 	connection net.Conn
-	servers    []*server.Server
-}
-
-type netInfo struct {
-	ip   string
-	port int
+	servers    []*Server
 }
 
 func (c *Client) GetUpdate() {
 	size := len(c.servers)
 	for i, v := range c.servers {
-		if v.GetStatus() == server.OFFLINE {
+		if v.GetStatus() == OFFLINE {
 			temp := c.servers[i]
 			c.servers[i] = c.servers[size-1]
 			c.servers[size-1] = temp
